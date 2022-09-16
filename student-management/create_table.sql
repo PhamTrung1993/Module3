@@ -6,6 +6,9 @@ class_id int not null auto_increment primary key,
 class_name varchar(25) not null,
 class_description varchar(50) not null
 );
+
+alter table class
+add column class_language varchar(50) not null after class_name;
 create table address
 (
 address_id int not null auto_increment primary key,
