@@ -12,7 +12,7 @@ create table Orders
 oID int not null auto_increment primary key,
 cID int not null,
 oDate datetime not null,
-oTotalPrice int not null,
+oTotalPrice int,
 foreign key(cID) references Customer(cID)
 );
 
@@ -20,14 +20,14 @@ create table Product
 (
 pID int not null auto_increment primary key,
 pName varchar(100) not null,
-pPrice int not null
+pPrice int 
 );
 create table OrderDetail
 (
-oID int not null auto_increment primary key,
+odID int not null auto_increment primary key,
+oID int not null ,
 pID int not null,
-odQTY varchar(50) not null,
-unique (pID),
+odQTY int not null,
 foreign key(oID) references Orders(oID),
 foreign key(pID) references Product(pID)
 );
