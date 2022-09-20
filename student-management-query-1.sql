@@ -15,10 +15,14 @@ where StudentId = 1;
 select S.StudentName,Sub.SubName,M.Mark
 from Student S join Mark M on S.StudentId = M.StudentId join Subjects Sub on M.SubId = Sub.SubId
 
+order by M.mark desc, S.StudentName asc;
+
+
+
 -- where M.mark in(
 -- select S.StudentName,Sub.SubName,M.Mark
 -- from Student S join Mark M on S.StudentId = M.StudentId join Subjects Sub on M.SubId = Sub.SubId
 -- having count(M.mark) > 1
 -- )
-order by M.mark desc;
+
 
