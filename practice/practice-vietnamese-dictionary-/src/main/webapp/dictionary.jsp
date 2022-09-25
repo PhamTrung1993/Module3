@@ -25,14 +25,11 @@
     String search = request.getParameter("search");
 
     String result = dic.get(search);
-    if (result != null) {
+    if (result == null) {
+        result = "dữ liệu trống";
+    }
 
-        System.out.println("Word: " + search );
-        System.out.println("Result: " + result);
-    }
-    else {
-        System.out.println("not found");
-    }
 %>
+<h2>từ <%=search%> nghĩa là : <%=result%></h2>
 </body>
 </html>
