@@ -29,7 +29,7 @@
                 <td><c:out value="${employee.getEmpname()}"></c:out></td>
                 <td><c:out value="${employee.getEmpDob()}"></c:out></td>
                 <td><c:out value="${employee.getEmpAddress()}"></c:out></td>
-                <td class='avatar'><img src="<c:out value="${employee.getEmpImage()}"></c:out>"></td>
+                <td><img class='avatar' src="<c:out value="${employee.getEmpImage()}"></c:out>"></td>
             </tr>
         </c:forEach>
     </table>

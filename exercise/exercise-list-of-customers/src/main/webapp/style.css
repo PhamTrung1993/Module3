@@ -2,7 +2,7 @@ table{
     width: 50%;
     margin: auto;
 }
-h1{
+h1,th,td{
     text-transform: uppercase;
     margin: .5em auto;
     text-align: center;
@@ -12,5 +12,7 @@ h1{
 
 .avatar{
     text-align: center;
+    width: 150px;
+    height: 150px;
 }
 
