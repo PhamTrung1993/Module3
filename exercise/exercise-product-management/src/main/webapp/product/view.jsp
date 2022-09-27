@@ -17,7 +17,7 @@
 <body>
 <h1>Customer details</h1>
 <p>
-    <a href="<c:url value="/products"/>" class="btn btn-danger btn-lg">Back to customer list</a>
+    <a href="<c:url value="/products"/>" class="my-1 btn btn-success btn-block">Back to customer list</a>
 </p>
 <table class="table">
     <tr>
@@ -33,12 +33,12 @@
         <td>${requestScope["product"].getProductDescribe()}</td>
     </tr>
     <tr>
-        <td>Descibe: </td>
-        <td>${requestScope["product"].getProductDescribe()}</td>
+        <td>Origin: </td>
+        <td>${requestScope["product"].getProductOrigin()}</td>
     </tr>
     <tr>
-        <td>Descibe: </td>
-        <td>${requestScope["product"].getProductDescribe()}</td>
+        <td>Image: </td>
+        <td><img class='avatar' src="<c:out value="${requestScope['product'].getProductImage()}"></c:out>"></td>
     </tr>
 </table>
 </body>

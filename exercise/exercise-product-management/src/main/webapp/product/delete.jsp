@@ -10,11 +10,26 @@
 <html>
 <head>
     <title>Delete Product</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body,table {
+            text-align: center;
+        }
+        img {
+            width: 100px;
+            height: 100px;
+        }
+        h1,h3 {
+            color: red;
+
+        }
+    </style>
 </head>
 <body>
-<h1>Delete customer</h1>
+<h1>Delete product</h1>
 <p>
-    <a href="/customers" class="btn btn-danger btn-lg">Back to customer list</a>
+    <a href="/products" class="btn btn-danger btn-lg">Back to customer list</a>
 </p>
 <form method="post">
     <h3>Are you sure?</h3>
@@ -39,11 +54,11 @@
             </tr>
             <tr>
                 <td>Image </td>
-                <td>${requestScope["product"].getImage}</td>
+                <td><td><img class='avatar' src="<c:out value="${requestScope['product'].getProductImage()}"></c:out>"></td></td>
             </tr>
             <tr>
                 <td><input type="submit" value="Delete customer"></td>
-                <td><a href="/customers">Back to customer list</a></td>
+                <td><a href="/products" class="btn btn-danger">Back to customer list</a></td>
             </tr>
         </table>
     </fieldset>

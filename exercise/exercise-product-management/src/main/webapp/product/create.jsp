@@ -10,6 +10,9 @@
 <html>
 <head>
     <title>Create new product</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 </head>
 <body>
   <h1>Create new Product</h1>
@@ -19,12 +22,12 @@
     </c:if>
   </p>
   <p>
-    <a href="/products">Back to product list</a>
+    <a href="/products" class="my-1 btn btn-success btn-block">Back to product list</a>
   </p>
   <form method="post">
     <fieldset>
       <legend>Product information</legend>
-      <table>
+      <table class="table">
         <tr>
           <td>Name: </td>
           <td><input type="text" name="name" id="name"><</td>
@@ -48,7 +51,7 @@
 
         <tr>
           <td></td>
-          <td><input type="submit" value="Create product"></td>
+          <td><input type="submit" value="Create product" class="my-1 btn btn-success btn-block"></td>
         </tr>
       </table>
     </fieldset>

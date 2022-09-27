@@ -15,14 +15,25 @@
         body,table {
             text-align: center;
         }
+        img {
+            width: 100px;
+            height: 100px;
+        }
     </style>
 </head>
 <body>
-<h1>Products</h1>
-<p>
-    <a href="/products?action=create">Create new product</a>
-</p>
-<table border="1">
+<h1>List of products</h1>
+<%--<p>--%>
+<%--    <a href="/products?action=create" class="btn btn-primary">Create new product</a>--%>
+<%--</p>--%>
+<form class="form-group search-form" action="/products" method="post">
+    <input name="search" class="form-control search-input" type="text" placeholder="Type something to search">
+    <input type="hidden" name="action" value="search">
+    <button type="submit" class="btn btn-primary search-btn">Seacrh</button>
+    <a href="/products?action=create"
+       class="btn btn-primary search-btn">Add</a>
+</form>
+<table border="1" class="table">
     <tr>
         <td>Name</td>
         <td>Price</td>
@@ -34,14 +45,13 @@
     </tr>
     <c:forEach items='${requestScope["products"]}' var = "product">
         <tr>
-            <td><a href="/products?action=view&id=${product.getProductId()}"></a></td>
-            <td>${product.getProductName()}</td>
+            <td><a href="/products?action=view&id=${product.getProductId()}">${product.getProductName()}</a></td>
             <td>${product.getProductPrice()}</td>
             <td>${product.getProductDescribe()}</td>
             <td>${product.getProductOrigin()}</td>
             <td><img class='avatar' src="<c:out value="${product.getProductImage()}"></c:out>"></td>
-            <td><a href="/products?action=edit&id=${product.getProductId()}">edit</a></td>
-            <td><a href="/products?action=delete&id=${product.getProductId()}">delete</a></td>
+            <td><a href="/products?action=edit&id=${product.getProductId()}" class="btn btn-primary">edit</a></td>
+            <td><a href="/products?action=delete&id=${product.getProductId()}" class="btn btn-primary">delete</a></td>
         </tr>
     </c:forEach>
 </table>

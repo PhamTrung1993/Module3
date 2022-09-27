@@ -12,7 +12,7 @@ public interface ProductService {
 
     Product findById(int id);
 
-    Product findByName(String name);
+    int findByName(String name);
 
     void update(int id, Product product);
 
