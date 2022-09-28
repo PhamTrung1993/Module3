@@ -30,23 +30,23 @@
         <table class="table">
             <tr>
                 <td>Name : </td>
-                <td><input type="text" name="name" id="name" value="${requestScope["customer"].getProductName()}"></td>
+                <td><input type="text" name="name" id="name" value="${requestScope["product"].getProductName()}"></td>
             </tr>
             <tr>
                 <td>Price : </td>
-                <td><input type="text" name="price" id="price" value="${requestScope["customer"].getProductPrice()}"></td>
+                <td><input type="text" name="price" id="price" value="${requestScope["product"].getProductPrice()}"></td>
             </tr>
             <tr>
                 <td>Describe : </td>
-                <td><input type="text" name="describe" id="describe" value="${requestScope["customer"].getProductDescribe()}"></td>
+                <td><input type="text" name="describe" id="describe" value="${requestScope["product"].getProductDescribe()}"></td>
             </tr>
             <tr>
                 <td>Origin : </td>
-                <td><input type="text" name="origin" id="origin" value="${requestScope["customer"].getProductOrigin()}"></td>
+                <td><input type="text" name="origin" id="origin" value="${requestScope["product"].getProductOrigin()}"></td>
             </tr>
             <tr>
                 <td>Image : </td>
-                <td><input type="text" name="image" id="image" value="${requestScope["customer"].getProductImage()}"></td>
+                <td><input type="text" name="image" id="image" value="${requestScope["product"].getProductImage()}"></td>
             </tr>
             <tr>
                 <td></td>

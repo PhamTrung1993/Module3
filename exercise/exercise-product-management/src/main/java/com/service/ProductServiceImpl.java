@@ -33,6 +33,10 @@ public class ProductServiceImpl implements ProductService{
         return products.get(id);
     }
 
+    // sử dụng Iterator để lấy toàn bộ value của HashMap
+    // thông qua phương thức values()
+    // vì các value có kiểu là product
+    // nên iterator cũng có kiểu là product
     @Override
     public int findByName(String name) {
         Iterator<Product> iterator = products.values().iterator();

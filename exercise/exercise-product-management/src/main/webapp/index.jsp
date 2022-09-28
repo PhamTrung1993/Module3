@@ -17,6 +17,6 @@
 <h1 style="color: darkblue"><%= "Hello !!!" %>
 </h1>
 <br/>
-<a href="product/list.jsp" class="btn btn-warning btn-lg">Show product</a>
+<a href="/products" class="btn btn-warning btn-lg">Show product</a>
 </body>
 </html>
