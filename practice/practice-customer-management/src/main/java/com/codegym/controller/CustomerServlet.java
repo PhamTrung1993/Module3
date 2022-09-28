@@ -31,6 +31,7 @@ public class CustomerServlet extends HttpServlet {
                 break;
             case "view" :
                 viewCustomer(request,response);
+                break;
             default:
                 listCustomers(request,response);
                 break;
