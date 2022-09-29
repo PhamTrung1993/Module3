@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO implements IUserDAO{
-    private final String jdbcURL = "jdbc:mysql://localhost:3306/demo";
+    private final String jdbcURL = "jdbc:mysql://localhost:3306/demo?useSSL=false";
     private final String jdbbcUsername = "root";
     private final String jdbcPassword = "123456";
 
@@ -16,6 +16,10 @@ public class UserDAO implements IUserDAO{
     private static final String SELECT_ALL_USERS = "select * from users";
     private static final String DELETE_USERS_SQL ="delete from users where id = ?";
     private static final String UPDATE_USERS_SQL = "update users set dname = ?,  email = ?, country =? where id = ?";
+
+    private static final String SORT_USERS_BY_NAME = "select * from users order by dname";
+
+    private static final String SELECT_BY_COUNTRY = "select * from users where country = ?";
 
     public UserDAO() {}
     // Một Connection trong java là phiên làm việc giữa ứng dụng java và cơ sở dữ liệu
@@ -137,5 +141,47 @@ public class UserDAO implements IUserDAO{
                 System.out.println("Cause: " + t);
             }
         }
+    }
+
+    @Override
+    public List<User> searchByCountry(String input_country) {
+        List<User> users = new ArrayList<>();
+        Connection conn = getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement(SELECT_BY_COUNTRY);
+            ps.setString(1, input_country);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                String email = rs.getString(3);
+                String country = rs.getString(4);
+                users.add(new User(id,name,email,country));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return users;
+    }
+
+    @Override
+    public List<User> sortUserByName() {
+        List<User> users = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SORT_USERS_BY_NAME)) {
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("dname");
+                String email = rs.getString("email");
+                String country = rs.getString("country");
+                users.add(new User(id,name,email,country));
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return users;
     }
 }
