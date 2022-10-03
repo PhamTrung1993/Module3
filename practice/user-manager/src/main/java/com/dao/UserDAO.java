@@ -25,14 +25,14 @@ public class UserDAO implements IUserDAO{
 
     private static final String SELECT_BY_COUNTRY = "select * from users where country = ?";
 
-    private static final String SQL_INSERT = "INSERT INTO EMPLLOYEE(NAME, SAKARY, CREATE_DATE) VALUES(?,?,?)";
-    private static final String SQL_UPDATE = "UPDATE EMPLOYEE SET SALARY=? WHERE NAME=?";
+    private static final String SQL_INSERT = "INSERT INTO EMPLOYEE(ENAME, SALARY, CREATED_DATE) VALUES(?,?,?)";
+    private static final String SQL_UPDATE = "UPDATE EMPLOYEE SET SALARY=? WHERE ENAME=?";
     private static final String SQL_TABLE_CREATE = "CREATE TABLE EMPLOYEE"
             + "("
 
             + " ID serial,"
 
-            + " NAME varchar(100) NOT NULL,"
+            + " ENAME varchar(100) NOT NULL,"
 
             + " SALARY numeric(15, 2) NOT NULL,"
 
@@ -154,14 +154,17 @@ public class UserDAO implements IUserDAO{
     }
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
-            e.printStackTrace(System.err);
-            System.err.println("SQLState : " + ((SQLException)e).getSQLState());
-            System.err.println("Error Code : " + ((SQLException)e).getErrorCode());
-            System.err.println("Message : " + e.getMessage());
-            //Phương thức getCause () của lớp Throwable là phương thức có sẵn được sử dụng để trả về nguyên nhân của giá trị có thể ném hoặc null này nếu không thể xác định được nguyên nhân cho trường hợp Ngoại lệ xảy ra
-            Throwable t = ex.getCause();
-            while (t != null) {
-                System.out.println("Cause: " + t);
+            if (e instanceof SQLException) {
+                e.printStackTrace(System.err);
+                System.err.println("SQLState : " + ((SQLException) e).getSQLState());
+                System.err.println("Error Code : " + ((SQLException) e).getErrorCode());
+                System.err.println("Message : " + e.getMessage());
+                //Phương thức getCause () của lớp Throwable là phương thức có sẵn được sử dụng để trả về nguyên nhân của giá trị có thể ném hoặc null này nếu không thể xác định được nguyên nhân cho trường hợp Ngoại lệ xảy ra
+                Throwable t = ex.getCause();
+                while (t != null) {
+                    System.out.println("Cause: " + t);
+                    t = t.getCause();
+                }
             }
         }
     }
@@ -373,7 +376,87 @@ public class UserDAO implements IUserDAO{
             e.printStackTrace();
 
         }
+    }
+
+    @Override
+    public void insertUpdateUseTransaction() {
+        try (Connection conn = getConnection();
+
+             Statement statement = conn.createStatement();
+
+             PreparedStatement psInsert = conn.prepareStatement(SQL_INSERT);
+
+             PreparedStatement psUpdate = conn.prepareStatement(SQL_UPDATE)) {
+
+            statement.execute(SQL_TABLE_DROP);
+
+            statement.execute(SQL_TABLE_CREATE);
+
+            // start transaction block
+
+            conn.setAutoCommit(false); // default true
+
+            // Run list of insert commands
+
+            psInsert.setString(1, "Quynh");
+
+            psInsert.setBigDecimal(2, new BigDecimal(10));
+
+            psInsert.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+
+            psInsert.execute();
+
+
+
+            psInsert.setString(1, "Ngan");
+
+            psInsert.setBigDecimal(2, new BigDecimal(20));
+
+            psInsert.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+
+            psInsert.execute();
+
+
+
+            // Run list of update commands
+
+
+
+            // below line caused error, test transaction
+
+            // org.postgresql.util.PSQLException: No value specified for parameter 1.
+
+            psUpdate.setBigDecimal(1, new BigDecimal(999.99));
+
+
+
+            //psUpdate.setBigDecimal(1, new BigDecimal(999.99));
+
+            psUpdate.setString(2, "Quynh");
+
+            psUpdate.execute();
+
+
+
+            // end transaction block, commit changes
+
+            conn.commit();
+
+            // good practice to set it back to default true
+
+            conn.setAutoCommit(true);
+
+
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+
+            e.printStackTrace();
+
+        }
 
     }
+
 }
 
