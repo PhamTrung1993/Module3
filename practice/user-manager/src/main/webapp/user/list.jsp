@@ -44,11 +44,11 @@
         <a href="/users?action=create"
            class="btn btn-primary search-btn">Add</a>
         <a href="/users" class="btn btn-primary search-btn">Menu</a>
-
+    </form>
 <div align="center">
     <caption><h2>List of Users</h2></caption>
     <table border="1" cellpadding="5" class="table">
-        <tr>
+        <tr style="background-color: #d2d0d0">
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>

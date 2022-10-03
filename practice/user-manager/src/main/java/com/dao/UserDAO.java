@@ -1,9 +1,11 @@
 package com.dao;
 
 import com.model.User;
+import com.mysql.cj.jdbc.CallableStatement;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class UserDAO implements IUserDAO{
@@ -183,5 +185,46 @@ public class UserDAO implements IUserDAO{
             printSQLException(e);
         }
         return users;
+    }
+
+    @Override
+    public User getUserById(int id) {
+        User user = null;
+        String query = "{CALL get_user_by_id(?)}";
+        // Step 1: Establishing a Connection
+        try (Connection connection = getConnection();
+             // Step 2:Create a statement using connection object
+             CallableStatement callableStatement = (CallableStatement) connection.prepareCall(query);)
+         {
+            callableStatement.setInt(1,id);
+             // Step 3: Execute the query or update query
+            ResultSet rs = callableStatement.executeQuery();
+             // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                String name = rs.getString("dname");
+                String email = rs.getString("email");
+                String country = rs.getString("country");
+                user = new User(id,name,email,country);
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return user;
+    }
+
+    @Override
+    public void insertUserStore(User user) throws SQLException {
+        String  query = "{Call insert_user(?,?,?)}";
+
+        try (Connection connection = getConnection();
+             CallableStatement callableStatement = (CallableStatement) connection.prepareCall(query);){
+            callableStatement.setString(1,user.getName());
+            callableStatement.setString(2,user.getEmail());
+            callableStatement.setString(3,user.getCountry());
+            System.out.println(callableStatement);
+            callableStatement.executeUpdate();
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
     }
 }
