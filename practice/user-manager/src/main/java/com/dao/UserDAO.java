@@ -1,7 +1,7 @@
 package com.dao;
 
 import com.model.User;
-import com.mysql.cj.jdbc.CallableStatement;
+
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -218,7 +218,7 @@ public class UserDAO implements IUserDAO{
         // Step 1: Establishing a Connection
         try (Connection connection = getConnection();
              // Step 2:Create a statement using connection object
-             CallableStatement callableStatement = (CallableStatement) connection.prepareCall(query);)
+             CallableStatement callableStatement = connection.prepareCall(query);)
          {
             callableStatement.setInt(1,id);
              // Step 3: Execute the query or update query
@@ -241,7 +241,7 @@ public class UserDAO implements IUserDAO{
         String  query = "{Call insert_user(?,?,?)}";
 
         try (Connection connection = getConnection();
-             CallableStatement callableStatement = (CallableStatement) connection.prepareCall(query);){
+             CallableStatement callableStatement = connection.prepareCall(query);){
             callableStatement.setString(1,user.getName());
             callableStatement.setString(2,user.getEmail());
             callableStatement.setString(3,user.getCountry());
@@ -458,5 +458,57 @@ public class UserDAO implements IUserDAO{
 
     }
 
+    @Override
+    public boolean updateUserStore(User user) throws SQLException {
+        String  query = "{Call update_user(?,?,?,?)}";
+        boolean rowUpdate = true;
+
+        try (Connection connection = getConnection();
+             CallableStatement callableStatement = connection.prepareCall(query);){
+            callableStatement.setInt(1, user.getId());
+            callableStatement.setString(2,user.getName());
+            callableStatement.setString(3,user.getEmail());
+            callableStatement.setString(4,user.getCountry());
+            System.out.println(callableStatement);
+            rowUpdate = callableStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return  rowUpdate;
+    }
+
+    @Override
+    public List<User> selectAllUsersStore() {
+        List<User> users = new ArrayList<>();
+        String  query = "{Call get_users()}";
+        try (Connection connection = getConnection();
+             CallableStatement callableStatement = connection.prepareCall(query);){
+            ResultSet rs = callableStatement.executeQuery();
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("dname");
+                String email = rs.getString("email");
+                String country = rs.getString("country");
+                users.add(new User(id,name,email,country)) ;
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return users;
+    }
+
+    @Override
+    public boolean deleteUserStore(int id) throws SQLException {
+        String  query = "{Call delete_users()}";
+        boolean rowDeleted;
+        try(Connection connection = getConnection();
+            CallableStatement callableStatement = connection.prepareCall(query)) {
+            callableStatement.setInt(1, id);
+            rowDeleted = callableStatement.executeUpdate() > 0;
+        }
+        return rowDeleted;
+
+    }
 }
 

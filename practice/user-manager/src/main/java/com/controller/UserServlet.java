@@ -45,7 +45,6 @@ public class UserServlet extends HttpServlet {
                     testWithoutTran(request, response);
                     break;
                 case "test-use-tran":
-
                     testUseTran(request, response);
                     break;
                 default:
@@ -85,7 +84,8 @@ public class UserServlet extends HttpServlet {
     private void deleteUser(HttpServletRequest request, HttpServletResponse response)
     throws SQLException,IOException,ServletException{
         int id = Integer.parseInt(request.getParameter("id"));
-        userDAO.deleteUser(id);
+//        userDAO.deleteUser(id);
+        userDAO.deleteUserStore(id);
 
         List<User> listUser = userDAO.selectAllUsers();
         request.setAttribute("listUser", listUser);
@@ -109,7 +109,8 @@ public class UserServlet extends HttpServlet {
     }
 
     private void listUser(HttpServletRequest request, HttpServletResponse response) throws SQLException,IOException,ServletException {
-        List<User> listUser = userDAO.sortUserByName();
+//        List<User> listUser = userDAO.sortUserByName();
+        List<User> listUser = userDAO.selectAllUsersStore();
         request.setAttribute("listUser", listUser);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/list.jsp");
         dispatcher.forward(request, response);
@@ -161,7 +162,8 @@ public class UserServlet extends HttpServlet {
         String country = request.getParameter("country");
 
         User book = new User(id, name, email, country);
-        userDAO.updateUser(book);
+//        userDAO.updateUser(book);
+        userDAO.updateUserStore(book);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/edit.jsp");
         dispatcher.forward(request, response);
     }
