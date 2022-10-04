@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="quadratic-equation-2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../quadratic-equation-2/quadratic_equation_2_jar/quadratic-equation-2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
